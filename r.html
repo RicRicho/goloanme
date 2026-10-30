@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>A private request</title><link rel="stylesheet" href="style.css"></head><body><div class="w">
+<div class="card req" id="box"><p>This request link is incomplete. Ask the person who sent it to share it again.</p></div>
+<p class="note">You were sent this privately. GoLoanMe is free for lenders. It never lends, holds money or arranges loans; any agreement is directly between you two. <a href="./">What is GoLoanMe?</a></p>
+</div><script src="app.js"></script><script>
+try{const r=dec(location.hash.slice(1));
+$('box').innerHTML=`<h2>A private request from ${esc(r.name)}</h2>${reqHtml(r)}<h3>Repayment plan ${esc(r.name)} is proposing</h3><table><tr><th>#</th><th>Due</th><th>Amount</th></tr>${schedule(r).map(x=>`<tr><td>${x.no}</td><td>${x.date.toLocaleDateString('en-AU')}</td><td>${money(x.amt)}</td></tr>`).join('')}</table>
+<h3>Reply to ${esc(r.name)}</h3>${contactLinks(r,`Hi ${r.name}, I saw your GoLoanMe request. I might be able to help.`)}
+<p class="note">If you agree, ${esc(r.name)} will send you a ready-to-sign agreement with repayment reminders for you both.</p>`}catch(e){}
+</script></body></html>

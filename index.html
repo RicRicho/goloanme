@@ -1,35 +1,50 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GoLoanMe – ask the people who know you</title>
-<style>
-body{font-family:system-ui,-apple-system,sans-serif;margin:0;color:#1d2433;background:#f6f8fb;line-height:1.5}
-.w{max-width:760px;margin:auto;padding:24px}h1{font-size:2.3rem;margin:.4em 0}.hero{padding:48px 0 16px}
-.sub{font-size:1.2rem;color:#4a5568}.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 4px #0001}label{display:block;margin-top:12px;font-weight:600}
-input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e0;border-radius:8px;font:inherit;box-sizing:border-box}
-.btn{display:inline-block;background:#0b7a4b;color:#fff;padding:14px 22px;border-radius:10px;text-decoration:none;font-weight:700;border:0;font-size:1.05rem;cursor:pointer;margin-top:16px}
-#preview{display:none;border-left:5px solid #0b7a4b}.note{font-size:.85rem;color:#718096}.ok{background:#e6f6ee;padding:14px;border-radius:10px;display:none}
-</style></head><body><div class="w">
-<div class="ok" id="paid">Thanks, your month one is paid. Copy your request below and send it privately to the people you choose.</div>
+<title>GoLoanMe | Ask the people who already trust you</title><meta name="description" content="Write a clear private loan request and share it only with friends and family. Repayment schedule, agreement and reminders included. A$9 a month, lenders free.">
+<link rel="stylesheet" href="style.css"></head><body><div class="w">
+<div id="home">
 <div class="hero"><h1>Ask the people who already trust you.</h1>
-<p class="sub">GoLoanMe helps you write a clear, private loan request and share it only with your own friends, family and contacts, on terms you propose.</p></div>
+<p class="sub">Need a few thousand dollars? The people who know you might rather lend it to you than leave it in a bank at 4%. GoLoanMe turns that awkward conversation into a clear, private request you send only to people you choose.</p>
+<a class="btn" href="#build">Build my request, free preview</a></div>
 <h2>How it works</h2><div class="steps">
-<div class="card"><b>1. Build your request</b><br>Amount, what it's for, how long, and what you'll give back.</div>
-<div class="card"><b>2. Share it privately</b><br>Your link goes only to people you send it to. Never public, never to strangers.</div>
-<div class="card"><b>3. Sort it out between you</b><br>Any money moves directly between you and your contact. GoLoanMe never lends, holds money or arranges loans.</div></div>
-<p>Borrowers pay <b>A$9 a month</b> while their request runs. Your contacts use it free.</p>
-<h2>Build your private request</h2><form class="card" id="f">
-<label>Your first name<input id="n" required placeholder="Sam"></label>
-<label>Amount (A$)<input id="a" type="number" min="50" required placeholder="2000"></label>
-<label>What it's for<textarea id="p" rows="3" required placeholder="Car repair so I can keep getting to work"></textarea></label>
-<label>Term<select id="t"><option>1 month</option><option>3 months</option><option selected>6 months</option><option>12 months</option><option>24 months</option></select></label>
-<label>What you'll give back to your lender<input id="r" required placeholder="A$2,100 total, A$350 a month"></label>
+<div class="card"><b>1. Build your request</b><br>Amount, what it's for, how many months, and what you'll give back. We work out the repayments.</div>
+<div class="card"><b>2. Share your private link</b><br>Send it by WhatsApp, text or email to people you pick. Never public, never strangers. They reply straight to you.</div>
+<div class="card"><b>3. Agree, then let us chase</b><br>Get a ready-to-sign agreement, a repayment schedule and calendar reminders for both of you, so nobody has to nag.</div></div>
+<div class="card"><b>A$9 a month while your loan runs. Lenders always free.</b> Cancel any time. Compare that with a A$5,000 personal loan at 20% interest, which costs about A$540 in interest over 12 months.</div>
+<h2 id="build">Build your private request</h2><form class="card" id="f">
+<label>Your first name<input id="name" required placeholder="Sam"></label>
+<label>Amount (A$)<input id="amount" type="number" min="50" required placeholder="3000"></label>
+<label>What it's for<textarea id="purpose" rows="3" required placeholder="Car repair so I can keep getting to work"></textarea></label>
+<label>Repay over<select id="months"><option>1</option><option>3</option><option selected>6</option><option>12</option><option>24</option></select></label>
+<label>Extra you'll give back as thanks (A$, can be 0)<input id="extra" type="number" min="0" value="0"></label>
+<label>Your mobile (so lenders can reply)<input id="phone" placeholder="0412 345 678"></label>
+<label>Or your email<input id="email" type="email" placeholder="sam@example.com"></label>
 <button class="btn" type="submit">Preview my request</button></form>
-<div class="card" id="preview"><h3>Your private request</h3><div id="pv"></div>
-<a class="btn" href="https://buy.stripe.com/bJecMY5qzdhB0QM8gLfEk06">Pay A$9 for month one</a>
-<p class="note">A$9 a month subscription, cancel any time. You're paying for the request tool only.</p></div>
-<p class="note" style="margin-top:40px">GoLoanMe is a messaging tool. It does not lend money, hold funds, assess credit, or arrange or recommend loans. Any agreement is made directly between you and the people you choose to ask.</p>
-</div><script>
-const $=i=>document.getElementById(i),e=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-if(location.search.includes('paid=1'))$('paid').style.display='block';
-$('f').onsubmit=ev=>{ev.preventDefault();$('pv').innerHTML=`<p>Hi, it's ${e($('n').value)}. I'm asking a few people I trust if they could help with a private loan of <b>A$${Number($('a').value).toLocaleString()}</b>.</p><p><b>What it's for:</b> ${e($('p').value)}</p><p><b>Term:</b> ${e($('t').value)}</p><p><b>What I'll give back:</b> ${e($('r').value)}</p><p>No pressure at all. Just reply to me directly if you're open to it.</p>`;$('preview').style.display='block';$('preview').scrollIntoView({behavior:'smooth'})};
+<div class="card req hide" id="preview"><h3>This is what your contacts will see</h3><div id="pv"></div>
+<a class="btn" id="pay" href="https://buy.stripe.com/bJecMY5qzdhB0QM8gLfEk06">Pay A$9 and get my private link</a>
+<p class="note">After payment you come straight back here with your share link, agreement, repayment schedule and reminders. A$9 a month, cancel any time.</p></div>
+</div>
+<div id="paid" class="hide"><div class="ok"><b>You're set.</b> Your month one is paid. Here's everything you need.</div>
+<div class="card"><h3>1. Send your private link</h3><p>Only people you send this to can see it.</p><code id="link"></code>
+<div id="share"></div><button class="btn alt" id="copy">Copy link</button></div>
+<div class="card"><h3>2. When someone says yes</h3><label>Lender's name<input id="lender" placeholder="Aunty Jo"></label>
+<a class="btn" id="agree" target="_blank">Open the agreement to sign</a><button class="btn alt" id="icsb">Add my repayment reminders</button>
+<p class="note">Send your lender the same agreement link. It has their own reminders button too.</p></div>
+<div class="card"><h3>Your repayment schedule</h3><table id="sched"></table></div></div>
+<div id="lost" class="hide card">Payment received, but this browser lost your request. Rebuild it below and press Preview; you won't be charged twice. <a href="./#build">Rebuild my request</a></div>
+<p class="note" style="margin-top:40px">GoLoanMe is a messaging and record-keeping tool. It does not lend money, hold funds, assess credit, or arrange or recommend loans. Any agreement is made directly between you and the people you choose to ask.</p>
+</div><script src="app.js"></script><script>
+let R=JSON.parse(localStorage.getItem('glm_req')||'null');const paid=/paid=1/.test(location.search)||localStorage.getItem('glm_paid');
+function read(){const v=i=>$(i).value;return{name:v('name'),amount:v('amount'),purpose:v('purpose'),months:v('months'),extra:v('extra')||0,phone:v('phone'),email:v('email'),start:new Date().toISOString().slice(0,10)}}
+$('f').onsubmit=ev=>{ev.preventDefault();R=read();if(!R.phone&&!R.email){alert('Add a mobile or email so people can reply to you.');return}
+ localStorage.setItem('glm_req',JSON.stringify(R));$('pv').innerHTML=reqHtml(R);$('preview').classList.remove('hide');
+ if(paid){$('pay').textContent='Get my private link';$('pay').href='?paid=1'}$('preview').scrollIntoView({behavior:'smooth'})};
+function showPaid(){localStorage.setItem('glm_paid','1');if(!R){$('lost').classList.remove('hide');return}$('home').classList.add('hide');$('paid').classList.remove('hide');
+ const base=location.href.replace(/[^/]*([?#].*)?$/,''),link=base+'r.html#'+enc(R);$('link').textContent=link;
+ const msg=`Hi, it's ${R.name}. I'm asking a few people I trust about a private loan. No pressure at all, here are the details: ${link}`;
+ $('share').innerHTML=`<a class="btn" href="https://wa.me/?text=${encodeURIComponent(msg)}">Share on WhatsApp</a><a class="btn alt" href="sms:?&body=${encodeURIComponent(msg)}">Share by text</a><a class="btn alt" href="mailto:?subject=${encodeURIComponent('A private favour')}&body=${encodeURIComponent(msg)}">Share by email</a>`;
+ $('copy').onclick=()=>{navigator.clipboard.writeText(msg);$('copy').textContent='Copied'};
+ const upd=()=>{const r={...R,lender:$('lender').value};$('agree').href=base+'agreement.html#'+enc(r)};$('lender').oninput=upd;upd();
+ $('icsb').onclick=()=>ics({...R,lender:$('lender').value},'borrower');
+ $('sched').innerHTML='<tr><th>#</th><th>Due</th><th>Amount</th></tr>'+schedule(R).map(x=>`<tr><td>${x.no}</td><td>${x.date.toLocaleDateString('en-AU')}</td><td>${money(x.amt)}</td></tr>`).join('')}
+if(/paid=1/.test(location.search))showPaid();
 </script></body></html>

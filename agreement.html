@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Private loan agreement</title><link rel="stylesheet" href="style.css"></head><body><div class="w"><div class="card" id="doc">Agreement link incomplete.</div>
+<div class="noprint"><button class="btn" onclick="print()">Print or save as PDF</button><button class="btn alt" id="lb">Lender: add repayment reminders</button><button class="btn alt" id="bb">Borrower: add repayment reminders</button>
+<p class="note">A simple template for a private loan between people who know each other. It is not legal or financial advice. GoLoanMe is not a party to this agreement and never holds or moves money.</p></div></div>
+<script src="app.js"></script><script>
+try{const r=dec(location.hash.slice(1)),s=schedule(r),L=r.lender||'________________';
+$('doc').innerHTML=`<h2>Private loan agreement</h2><p>Date: ${new Date().toLocaleDateString('en-AU')}</p>
+<p><b>Lender:</b> ${esc(L)} &nbsp; <b>Borrower:</b> ${esc(r.name)}</p>
+<p>1. The Lender agrees to lend the Borrower <b>${money(r.amount)}</b>, paid directly to the Borrower's bank account.</p>
+<p>2. Purpose: ${esc(r.purpose)}.</p>
+<p>3. The Borrower will repay <b>${money(+r.amount+(+r.extra||0))}</b> in total${+r.extra?`, which includes ${money(r.extra)} as an agreed extra`:''}, in ${s.length} monthly repayment(s) on the dates below, directly to the Lender's bank account.</p>
+<table><tr><th>#</th><th>Due</th><th>Amount</th></tr>${s.map(x=>`<tr><td>${x.no}</td><td>${x.date.toLocaleDateString('en-AU')}</td><td>${money(x.amt)}</td></tr>`).join('')}</table>
+<p>4. The Borrower may repay early at any time without penalty.</p><p>5. If a repayment will be late, the Borrower will tell the Lender before the due date and both will agree a new date in writing.</p>
+<p>6. This agreement is made directly between the Lender and the Borrower. GoLoanMe is not a party and does not hold, move or guarantee any money.</p>
+<br><p>Lender signature: ______________________ &nbsp; Date: ________</p><p>Borrower signature: ____________________ &nbsp; Date: ________</p>`;
+$('lb').onclick=()=>ics(r,'lender');$('bb').onclick=()=>ics(r,'borrower')}catch(e){}
+</script></body></html>
